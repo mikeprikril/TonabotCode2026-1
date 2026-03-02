@@ -8,6 +8,10 @@ package frc.robot;
 /** Add your docs here. */
 public final class Constants {
 
+    public static final class DriveConstants{
+        public static final double driveSlowFActor = 0.4; //slow down percentage
+    }
+        
     public static final class IntakeConstants{
         public static final int intakeMotorID = 23;
         public static final double IntakeSpeed = 0.5; //set default Intake Speed
@@ -18,8 +22,9 @@ public final class Constants {
         public static final int conveyorMotorID = 25;
         public static final int turretMotorID = 26;
         public static final int shooterMotorID = 27;
-        public static final double spinnerSpeed = 0.3; //speed for spinner plate with holes
-        public static final double conveyorSpeed = -0.9; //vertical conveyor speed
+        public static final double spinnerSpeed = -0.5; //speed for spinner plate with holes
+        public static final double SpinRateLimit = 2.5; //set ramp rate for spinner wheel
+        public static final double conveyorSpeed = -1; //vertical conveyor speed
         public static final double ShooterSpeed = 0.5; //set default shooter Speed
     }
     public static final class HangConstants{

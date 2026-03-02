@@ -11,7 +11,10 @@ import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -31,6 +34,9 @@ public class ShooterSubsystem extends SubsystemBase {
   RelativeEncoder shooterEncoder;
 
   SparkMaxConfig ShooterMotorConfig = new SparkMaxConfig();
+  SparkMaxConfig SpinnerConfig = new SparkMaxConfig();
+
+  SlewRateLimiter SpinnerRate;
  
 
   public ShooterSubsystem() {
@@ -58,6 +64,11 @@ ShooterMotorConfig.closedLoop
 .outputRange(0, 3000);
 
 ShooterMotor.configure(ShooterMotorConfig,ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+
+ShooterMotorConfig.idleMode(IdleMode.kCoast);
+SpinnerConfig.idleMode(IdleMode.kCoast);
+
+SpinnerRate = new SlewRateLimiter(Constants.ShooterConstants.SpinRateLimit);
 
   }
   public void spinShooter(double ShooterSpeed) {
@@ -93,5 +104,6 @@ ShooterMotor.configure(ShooterMotorConfig,ResetMode.kNoResetSafeParameters, Pers
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Speed", shooterEncoder.getVelocity());
+    
   }
 }
