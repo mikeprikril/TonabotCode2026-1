@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
@@ -65,9 +66,10 @@ ShooterMotorConfig.closedLoop
 .d(0.0000)
 .outputRange(0, 3000);
 
-ShooterMotor.configure(ShooterMotorConfig,ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+ShooterMotor.configure(ShooterMotorConfig,ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
 ShooterMotorConfig.idleMode(IdleMode.kCoast);
+
 SpinnerConfig.idleMode(IdleMode.kCoast);
 
 SpinnerRate = new SlewRateLimiter(Constants.ShooterConstants.SpinRateLimit);
@@ -106,6 +108,9 @@ SpinnerRate = new SlewRateLimiter(Constants.ShooterConstants.SpinRateLimit);
       turretMotor.stopMotor();
     }
     else if (turretCommandSpeed > 0 && turrentEncoder.getPosition() > Constants.ShooterConstants.turretEnd){
+      turretMotor.stopMotor();
+    }
+    else if(turretCommandSpeed < 0.1 && turretCommandSpeed > -0.1){
       turretMotor.stopMotor();
     }
     else turretMotor.set(turretCommandSpeed);
